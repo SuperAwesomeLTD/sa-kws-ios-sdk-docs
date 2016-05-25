@@ -13,7 +13,7 @@ Version     <sdk_version_kws_ios>
 IOS Support <sdk_iosmin>
 GitHub      <sdk_source>
 Support     `<sdk_devsuspport> <mailto:<sdk_devsuspport>>`_
-License     `LICENSE <https://raw.githubusercontent.com/SuperAwesomeLTD/sa-kws-ios-sdk/master/LICENSE>`_
+License     `LICENSE <https://raw.githubusercontent.com/SuperAwesomeLTD/sa-kws-ios-sdk-objc/master/LICENSE>`_
 =========== ========
 
 Table of Contents:

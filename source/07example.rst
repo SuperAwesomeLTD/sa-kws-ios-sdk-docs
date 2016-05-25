@@ -1,63 +1,63 @@
 Example
 =======
 
-.. code-block:: swift
+.. code-block:: obj-c
 
-    import UIKit
-    import KWSiOSSDK
+    #import "MyViewController.h"
+    #import "KWS.h"
 
-    class ViewController: UIViewController, KWSProtocol {
+    @interface MyViewController ()  <KWSProtocol>
+    @end
 
-        // <UIViewController> setup functions
+    @implementation MyViewController
 
-        override func viewDidLoad() {
-            // call to super
-            super.viewDidLoad()
+    - (void) viewDidLoad {
+        [super viewDidLoad];
+        // Do any additional setup after loading the view, typically from a nib.
 
-            // setup KWS
-            KWS.sdk.setup(oauthToken: "_FULL_OAUTH_TOKEN_",
-                          kwsApiUrl: "https://kwsapi.demo.superawesome.tv/v1/",
-                          delegate: self)
+        // setup data
+        NSString *token1 = @"__CURRENT_VALID_OAUTH_TOKEN__";
+        NSString *url = @"https://kwsapi.demo.superawesome.tv/v1/"";
 
-            // start checking
-            KWS.sdk.checkIfNotificationsAreAllowed()
-        }
+        // setup SDK
+        [[KWS sdk] setupWithOAuthToken:token kwsApiUrl:url delegate:self];
 
-        override func didReceiveMemoryWarning() {
-            super.didReceiveMemoryWarning()
-            // Dispose of any resources that can be recreated.
-        }
-
-        // <KWSProtocol> implementation
-
-        func isAllowedToRegisterForRemoteNotifications () {
-            KWS.sdk.registerForRemoteNotifications()
-        }
-
-        func isAlreadyRegisteredForRemoteNotifications () {
-            // usually do nothing here
-        }
-
-        func didFailBecauseKWSCouldNotFindParentEmail () {
-            let parentEmail = "example@parent.com"
-            KWS.sdk.submitParentEmail(email)
-        }
-
-        // parent has disabled remote notifications for this user on this app
-        func didFailBecauseKWSDoesNotAllowRemoteNotificaitons () {
-            //
-        }
-
-        // user has disabled remote notifications on his phone
-        func didFailBecauseRemoteNotificationsAreDisabled () {
-            print("User has disabled remote notifications")
-        }
-
-        // probably network error
-        func didFailBecauseOfError () {
-        }
-
-        func didRegisterForRemoteNotifications () {
-            print("Success!")
-        }
+        // start checking for notifications
+        [[KWS sdk] checkIfNotificationsAreAllowed];
     }
+
+    - (void) didReceiveMemoryWarning {
+        [super didReceiveMemoryWarning];
+        // Dispose of any resources that can be recreated.
+    }
+
+    - (void) isAllowedToRegisterForRemoteNotifications {
+        [[KWS sdk] registerForRemoteNotifications];
+    }
+
+    - (void) isAlreadyRegisteredForRemoteNotifications {
+
+    }
+
+    - (void) didRegisterForRemoteNotifications {
+
+    }
+
+    - (void) didFailBecauseKWSDoesNotAllowRemoteNotifications {
+
+    }
+
+    - (void) didFailBecauseKWSCouldNotFindParentEmail {
+        NSString *email = @"example@parent.com";
+        [[KWS sdk] submitParentEmail:email];
+    }
+
+    - (void) didFailBecauseRemoteNotificationsAreDisabled {
+
+    }
+
+    - (void) didFailBecauseOfError {
+
+    }
+
+    @end

@@ -4,14 +4,13 @@ Overview
 Architecture
 ^^^^^^^^^^^^
 
-The KWS iOS SDK occupies the **KWS** namespace in Swift.
 The SDK itself is a singleton whose accessor method is called **sdk**.
 
 Thus all calls to the SDK will have to following general signature:
 
-.. code-block:: swift
+.. code-block:: obj-c
 
-    KWS.sdk.someFunction ()
+    [[KWS sdk] someFunction]
 
 General overview of the process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

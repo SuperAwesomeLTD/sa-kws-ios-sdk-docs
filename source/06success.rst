@@ -1,16 +1,14 @@
 Success
 =======
 
-Success is signaled when the delegate calls the following method:
+Success is signaled when the delegate calls the following methods:
 
-.. code-block:: swift
+.. code-block:: obj-c
 
-    func didRegisterForRemoteNotifications() {
+    - (void) didRegisterForRemoteNotifications {
         // handle success
     }
 
-    // or
-
-    func isAlreadyRegisteredForRemoteNotifications () {
+    - (void) isAlreadyRegisteredForRemoteNotifications {
         // in case user is already registered for remote notifications
     }

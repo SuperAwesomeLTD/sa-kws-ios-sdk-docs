@@ -11,47 +11,52 @@ The three parameters can be conveniently set by using the **setup** function:
 
 .. code-block:: swift
 
-    KWS.sdk.setup(oauthToken: "__CURRENT_VALID_OAUTH_TOKEN__",
-                  kwsApiUrl: "__KWS_API_BACKEND__",
-                  delegate: self)
+
+    NSString *token = "__CURRENT_VALID_OAUTH_TOKEN__";
+    NSString *url = "__KWS_API_BACKEND_URL__";
+    [[KWS sdk] setupWithOAuthToken:token kwsApiUrl:url delegate:self];
 
 Also, the class that acts as a delegate of **KWSProtocol** must implement the following methods:
 
-.. code-block:: swift
+.. code-block:: obj-c
 
-    class MyViewController: UIViewController, KWSProtocol {
+    @interface MyViewController () <KWSProtocol>
+    @end
+    @implementation MyViewController
 
-        // rest of the implementation ...
+    // rest of the implementation ...
 
-        // <KWSProtocol> implementation
+    // <KWSProtocol> implementation
 
-        func isAllowedToRegisterForRemoteNotifications () {
+    - (void) isAllowedToRegisterForRemoteNotifications {
 
-        }
-
-        func isAlreadyRegisteredForRemoteNotifications () {
-
-        }
-
-        func didRegisterForRemoteNotifications () {
-
-        }
-
-        func didFailBecauseKWSDoesNotAllowRemoteNotificaitons () {
-
-        }
-
-        func didFailBecauseKWSCouldNotFindParentEmail () {
-
-        }
-
-        func didFailBecauseRemoteNotificationsAreDisabled () {
-
-        }
-
-        func didFailBecauseOfError () {
-
-        }
     }
+
+    - (void) isAlreadyRegisteredForRemoteNotifications {
+
+    }
+
+    - (void) didRegisterForRemoteNotifications {
+
+    }
+
+    - (void) didFailBecauseKWSDoesNotAllowRemoteNotifications {
+
+    }
+
+    - (void) didFailBecauseKWSCouldNotFindParentEmail {
+
+    }
+
+    - (void) didFailBecauseRemoteNotificationsAreDisabled {
+
+    }
+
+    - (void) didFailBecauseOfError {
+
+    }
+
+    @end
+
 
 Once this is achieved, you've correctly setup the Kids Web Services iOS SDK.

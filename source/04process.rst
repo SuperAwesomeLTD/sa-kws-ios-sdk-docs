@@ -3,9 +3,9 @@ Process
 
 To check if remote notifications are allowed for the current user, you will need to call:
 
-.. code-block:: swift
+.. code-block:: obj-c
 
-    KWS.sdk.checkIfNotificationsAreAllowed()
+    [[KWS sdk] checkIfNotificationsAreAllowed];
 
 This will look at a number of conditions in order to determine if remote notifications are enabled:
 
@@ -16,18 +16,18 @@ This will look at a number of conditions in order to determine if remote notific
 
 If the process goes OK, the following function will get called:
 
-.. code-block:: swift
+.. code-block:: obj-c
 
-    func isAllowedToRegisterForRemoteNotifications () {
-        // continue ...
+    - (void) isAllowedToRegisterForRemoteNotifications {
+        // continue
     }
 
 In this function you'll need to then call the second SDK function:
 
-.. code-block:: swift
+.. code-block:: obj-c
 
-    func isAllowedToRegisterForRemoteNotifications () {
-        KWS.sdk.registerForRemoteNotifications ()
+    - (void) isAllowedToRegisterForRemoteNotifications {
+        [[KWS sdk] registerForRemoteNotifications];
     }
 
 After this step is through, remote notification will be enabled.
