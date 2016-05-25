@@ -20,7 +20,9 @@ Example
         NSString *url = @"https://kwsapi.demo.superawesome.tv/v1/"";
 
         // setup SDK
-        [[KWS sdk] setupWithOAuthToken:token kwsApiUrl:url delegate:self];
+        [[KWS sdk] setupWithOAuthToken:token
+                             kwsApiUrl:url
+                              delegate:self];
 
         // start checking for notifications
         [[KWS sdk] checkIfNotificationsAreAllowed];
@@ -32,6 +34,8 @@ Example
     }
 
     - (void) isAllowedToRegisterForRemoteNotifications {
+        // if the SDK checkup determines the user is allowed to receive
+        // remote notifications - then register the user!
         [[KWS sdk] registerForRemoteNotifications];
     }
 

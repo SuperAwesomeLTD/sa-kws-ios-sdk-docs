@@ -10,7 +10,7 @@ Thus all calls to the SDK will have to following general signature:
 
 .. code-block:: obj-c
 
-    [[KWS sdk] someFunction]
+    [[KWS sdk] someFunction];
 
 General overview of the process
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

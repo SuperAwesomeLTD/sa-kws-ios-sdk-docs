@@ -14,7 +14,10 @@ The three parameters can be conveniently set by using the **setup** function:
 
     NSString *token = "__CURRENT_VALID_OAUTH_TOKEN__";
     NSString *url = "__KWS_API_BACKEND_URL__";
-    [[KWS sdk] setupWithOAuthToken:token kwsApiUrl:url delegate:self];
+    
+    [[KWS sdk] setupWithOAuthToken:token
+                         kwsApiUrl:url
+                          delegate:self];
 
 Also, the class that acts as a delegate of **KWSProtocol** must implement the following methods:
 
