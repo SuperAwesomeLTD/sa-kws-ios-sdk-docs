@@ -33,5 +33,3 @@ In this function you'll need to then call the second SDK function:
 After this step is through, remote notification will be enabled.
 If the application asks for this permission the first time, then the general System pop-up will appear. If not,
 the notifications will be silently enabled.
-
-There are also multiple errors that can happen.

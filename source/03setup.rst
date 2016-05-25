@@ -12,9 +12,9 @@ The three parameters can be conveniently set by using the **setup** function:
 .. code-block:: swift
 
 
-    NSString *token = "__CURRENT_VALID_OAUTH_TOKEN__";
-    NSString *url = "__KWS_API_BACKEND_URL__";
-    
+    NSString *token = @"__CURRENT_VALID_OAUTH_TOKEN__";
+    NSString *url = @"__KWS_API_BACKEND_URL__";
+
     [[KWS sdk] setupWithOAuthToken:token
                          kwsApiUrl:url
                           delegate:self];

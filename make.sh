@@ -19,6 +19,7 @@ sdk_version_web="2.0.0"
 sdk_version_flash="3.2.3"
 sdk_version_kws="1.0.0"
 sdk_version_kws_ios="1.0.2"
+sdk_version_kws_android="1.0.0"
 sdk_source="https://github.com/SuperAwesomeLTD/sa-kws-ios-sdk-objc"
 sdk_author="Gabriel Coman"
 
@@ -65,6 +66,7 @@ sed -i sedbak "s|<sdk_version_flash>|$sdk_version_flash|g" *.*
 sed -i sedbak "s|<sdk_version_web>|$sdk_version_web|g" *.*
 sed -i sedbak "s|<sdk_version_kws>|$sdk_version_kws|g" *.*
 sed -i sedbak "s|<sdk_version_kws_ios>|$sdk_version_kws_ios|g" *.*
+sed -i sedbak "s|<sdk_version_kws_android>|$sdk_version_kws_android|g" *.*
 sed -i sedbak "s|<sdk_source>|$sdk_source|g" *.*
 sed -i sedbak "s|<sdk_author>|$sdk_author|g" *.*
 find . -name "*.*sedbak" -print0 | xargs -0 rm
