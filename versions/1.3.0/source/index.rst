@@ -9,10 +9,10 @@ This is the SuperAwesome iOS SDK that enables safe remote notifications through 
 =========== ========
 Info        Contents
 =========== ========
-Version     <sdk_version_kws_ios>
-IOS Support <sdk_iosmin>
+Version     <sdk_version>
+Support     <sdk_min>
 GitHub      <sdk_source>
-Support     `<sdk_devsuspport> <mailto:<sdk_devsuspport>>`_
+contact     `<sdk_devsuspport> <mailto:<sdk_devsuspport>>`_
 License     `LICENSE <https://raw.githubusercontent.com/SuperAwesomeLTD/sa-kws-ios-sdk-objc/master/LICENSE>`_
 =========== ========
 
