@@ -1,5 +1,5 @@
-Integrate the SDK
-=================
+Add the SDK through CocoaPods
+=============================
 
 We use `CocoaPods <http://cocoapods.org>`_ in order to make installing and updating our SDK super easy.
 CocoaPods is a dependency manager for Swift and Objective-C Cocoa projects.

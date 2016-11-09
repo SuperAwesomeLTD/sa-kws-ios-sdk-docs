@@ -26,7 +26,9 @@ Table of Contents:
 .. toctree::
    :maxdepth: 2
 
-	 Integrate the SDK <00integrate>
+	 Add the SDK through CocoaPods <00addcocoa>
+	 Add the SDK as a framework <00addframe>
+   Add the SDK as a static library <00addstatic>
 	 Overview <01overview>
 	 Start a new KWS session <02session>
    Get user details <03userdetails>
