@@ -15,7 +15,7 @@ To set it up you will have to call:
 .. code-block:: objective-c
 
   #define CLIENT_ID     @"id"
-	#define APP_ID				303030
+  #define APP_ID        303030
   #define CLIENT_SECRET @"client_secret"
   #define API           @"kws_api"
 
