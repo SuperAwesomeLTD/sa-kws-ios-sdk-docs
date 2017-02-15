@@ -57,12 +57,10 @@ Some methods also can have one or two parameters. In this case they will have th
 .. code-block:: objective-c
 
   [[KWS sdk] methodCallWithParam: (NSInteger) param1
-                        andParam: (NSString*) param2
-                                : ^(BOOL result) {
+                       withParam: (NSString*) param2
+                     andResponse: ^(BOOL result) {
     // perform operation on result
   }];
-
-You'll notice in this scenario the last parameter, the callback, is not named. This is intentional and at the moment added for brevity.
 
 .. note::
 

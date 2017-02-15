@@ -6,7 +6,6 @@ In order to be able to use the Kids Web Services SDK you'll first have to setup 
 A session is defined by
 
 	* a client ID
-	* an app ID
 	* a client Secret
 	* a back-end API URL to connect to
 
@@ -15,16 +14,14 @@ To set it up you will have to call:
 .. code-block:: objective-c
 
   #define CLIENT_ID     @"id"
-  #define APP_ID        303030
   #define CLIENT_SECRET @"client_secret"
   #define API           @"kws_api"
 
   [[KWS sdk] startSessionWithClientId: CLIENT_ID
-                             andAppId: APP_ID
                       andClientSecret: CLIENT_SECRET
                             andAPIUrl: API];
 
-You can obtain the Client Id, App Id, Client Secret and API host from the **Integration** section of your Kids Web Services Control Panel.
+You can obtain the Client Id, Client Secret and API host from the **Integration** section of your Kids Web Services Control Panel.
 
 They should be different for each app you have.
 
