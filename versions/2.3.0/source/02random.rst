@@ -13,7 +13,7 @@ Once that's done, it's a simple as calling:
 
 .. code-block:: objective-c
 
-  [[KWS sdk] generateRandomName:^(NSString *name) {
+  [[KWSChildren sdk] getRandomUsername: ^(NSString *name) {
       // if the name parameter is null, no name could be generated or
       // KWS is down;
       // Otherwise it will return a valid, unique name based on the values

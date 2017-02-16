@@ -5,7 +5,8 @@ You can invite other users on behalf of the user you're authenticated as by call
 
 .. code-block:: objective-c
 
-  [[KWS sdk] inviteUser: @"friend@test.com" andResponse:^(BOOL invited) {
+  [[KWSChildren sdk] inviteUser: @"friend@test.com"
+                   withResponse: ^(BOOL invited) {
     // handle invite
   }];
 

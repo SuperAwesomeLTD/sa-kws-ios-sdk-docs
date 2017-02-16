@@ -5,7 +5,7 @@ You can get the current score of the use you're authenticated as by calling:
 
 .. code-block:: objective-c
 
-  [[KWS sdk] getScore:^(KWSScore *score) {
+  [[KWSChildren sdk] getScore: ^(KWSScore *score) {
     // handle score
   }];
 

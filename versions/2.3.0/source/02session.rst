@@ -17,9 +17,9 @@ To set it up you will have to call:
   #define CLIENT_SECRET @"client_secret"
   #define API           @"kws_api"
 
-  [[KWS sdk] startSessionWithClientId: CLIENT_ID
-                      andClientSecret: CLIENT_SECRET
-                            andAPIUrl: API];
+  [[KWSChildren sdk] setupWithClientId: CLIENT_ID
+                       andClientSecret: CLIENT_SECRET
+                             andAPIUrl: API];
 
 You can obtain the Client Id, Client Secret and API host from the **Integration** section of your Kids Web Services Control Panel.
 

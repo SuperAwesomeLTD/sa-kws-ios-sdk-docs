@@ -17,40 +17,41 @@ You can start registering for Remote Notifications by calling:
 .. code-block:: objective-c
 
   // declare a new Callback of type "registered"
-  registered Callback = ^(KWSNotificationStatus status) {
+  KWSChildrenRegisterForRemoteNotificationsBlock Callback =
+  ^(KWSChildrenRegisterForRemoteNotificationsStatus status) {
 
   };
 
   // use that callback as parameter for the SDK register method
-  [[KWS sdk] register: Callback];
+  [[KWSChildren sdk] registerForRemoteNotifications: Callback];
 
 The callback will pass the following values on completion:
 
-====== ===================== ======
-Value  Type                  Meaning
-====== ===================== ======
-status KWSNotificationStatus End status of the operation
-====== ===================== ======
+====== =============================================== ======
+Value  Type                                            Meaning
+====== =============================================== ======
+status KWSChildrenRegisterForRemoteNotificationsStatus End status of the operation
+====== =============================================== ======
 
 The **status** parameter may have the following values:
 
-+-------------------------------------------------+
-| **Status**                                      |
-+-------------------------------------------------+
-| KWSNotification_Success                         |
-+-------------------------------------------------+
-| KWSNotification_ParentDisabledNotifications     |
-+-------------------------------------------------+
-| KWSNotification_UserDisabledNotifications       |
-+-------------------------------------------------+
-| KWSNotification_NoParentEmail                   |
-+-------------------------------------------------+
-| KWSNotification_FirebaseNotSetup                |
-+-------------------------------------------------+
-| KWSNotification_FirebaseCouldNotGetToken        |
-+-------------------------------------------------+
-| KWSNotification_NetworkError                    |
-+-------------------------------------------------+
++---------------------------------+
+| **Status**                      |
++---------------------------------+
+| Success                         |
++---------------------------------+
+| ParentDisabledNotifications     |
++---------------------------------+
+| UserDisabledNotifications       |
++---------------------------------+
+| NoParentEmail                   |
++---------------------------------+
+| FirebaseNotSetup                |
++---------------------------------+
+| FirebaseCouldNotGetToken        |
++---------------------------------+
+| NetworkError                    |
++---------------------------------+
 
 If the parent or user have disabled Remote Notifications then the Kids Web Services SDK will acknowledge this and not continue further.
 In this scenario it is advised to explain to the user why your app needs Remote Notifications.
@@ -65,24 +66,26 @@ A good example of handling different scenarios would be the following:
 
 .. code-block:: objective-c
 
-  registered Callback = ^(KWSNotificationStatus status) {
+  KWSChildrenRegisterForRemoteNotificationsBlock Callback =
+  ^(KWSChildrenRegisterForRemoteNotificationsStatus status) {
 
     switch (type) {
-      case KWSNotification_Success: {
+      case KWSChildren_RegisterForRemoteNotifications_Success: {
         // handle success
         break;
       }
 
       // user has no parent email submitted
-      case KWSNotification_NoParentEmail: {
+      case KWSChildren_RegisterForRemoteNotifications_NoParentEmail: {
 
         // show submit email popup
-        [[KWS sdk] submitParentEmailWithPopup:^(KWSNotificationStatus emailStatus) {
+        [[KWSChildren sdk] updateParentEmailWithPopup:
+        ^(KWSChildrenUpdateParentEmailStatus emailStatus) {
 
           switch (emailStatus) {
-            case KWSParentEmail_Success: {
+            case KWSChildren_UpdateParentEmail_Success: {
               // try to register again
-              [[KWS sdk] register: Callback];
+              [[KWSChildren sdk] registerForRemoteNotifications: Callback];
 							break;
             }
           }
@@ -91,7 +94,7 @@ A good example of handling different scenarios would be the following:
       }
 
       // user had disabled remote notifications
-      case KWSNotification_UserDisabledNotifications: {
+      case KWSChildren_RegisterForRemoteNotifications_UserDisabledNotifications: {
         // tell the user why your app needs notifications
         // guide him to the settings page
         break;
@@ -103,7 +106,7 @@ A good example of handling different scenarios would be the following:
   };
 
   // try to register for remote notifications
-  [[KWS sdk] register: Callback];
+  [[KWSChildren sdk] registerForRemoteNotifications: Callback];
 
 Unregister
 ^^^^^^^^^^
@@ -112,7 +115,7 @@ Reversely, you can unregister the user you're authenticated as by calling:
 
 .. code-block:: objective-c
 
-  [[KWS sdk] unregister: ^(BOOL success) {
+  [[KWSChildren sdk] unregisterForRemoteNotifications: ^(BOOL success) {
 
   }];
 
@@ -131,7 +134,7 @@ Finally, you can check if the user you're authenticated as is already registered
 
 .. code-block:: objective-c
 
-  [[KWS sdk] isRegistered: ^(BOOL isRegistered){
+  [[KWSChildren sdk] isRegisteredForRemoteNotifications: ^(BOOL isRegistered){
     // handle result
   }];
 

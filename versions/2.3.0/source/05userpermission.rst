@@ -10,20 +10,23 @@ Thus, to request permission for the user you're authenticated as you'll need to 
 .. code-block:: objective-c
 
   // create an array of permissions
-  NSArray *permissions = @[ @(accessEmail), @(accessFirstName) ];
+  NSArray *permissions = @[
+    @(KWSChildren_PermissionType_AccessEmail),
+    @(KWSChildren_PermissionType_AccessFirstName)
+  ];
 
   // request the permissions all at a time
-  [[KWS sdk] requestPermission: permissions
-                   andResponse: ^(KWSPermissionStatus status)
+  [[KWSChildren sdk] requestPermission: permissions
+                          withResponse: ^(KWSChildrenRequestPermissionStatus status)
   {
     switch (status) {
-      case KWSPermission_Success: {
+      case KWSChildren_RequestPermission_Success: {
         break;
       }
-      case KWSPermission_NoParentEmail: {
+      case KWSChildren_RequestPermission_NoParentEmail: {
         break;
       }
-      case KWSPermission_NetworkError: {
+      case KWSChildren_RequestPermission_NetworkError: {
         break;
       }
     }
@@ -31,38 +34,38 @@ Thus, to request permission for the user you're authenticated as you'll need to 
 
 The callback will pass the following values on completion:
 
-====== =================== ======
-Value  Type                Meaning
-====== =================== ======
-status KWSPermissionStatus End status of the operation
-====== =================== ======
+====== ================================== ======
+Value  Type                               Meaning
+====== ================================== ======
+status KWSChildrenRequestPermissionStatus End status of the operation
+====== ================================== ======
 
 The **status** parameter may have the following values:
 
-=========================== ======
-Value                       Meaning
-=========================== ======
-KWSPermission_Success       User asked for permission successfully
-KWSPermission_NoParentEmail User does not have an attached parent email
-KWSPermission_NetworkError  Other network error
-=========================== ======
+=========================================== ======
+Value                                       Meaning
+=========================================== ======
+KWSChildren_RequestPermission_Success       User asked for permission successfully
+KWSChildren_RequestPermission_NoParentEmail User does not have an attached parent email
+KWSChildren_RequestPermission_NetworkError  Other network error
+=========================================== ======
 
 And the available permissions are:
 
 +-------------------+
 | **Permission**    |
 +-------------------+
-| accessEmail       |
+| AccessEmail       |
 +-------------------+
-| accessAddress     |
+| AccessAddress     |
 +-------------------+
-| accessFirstName   |
+| AccessFirstName   |
 +-------------------+
-| accessLastName    |
+| AccessLastName    |
 +-------------------+
-| accessPhoneNumber |
+| AccessPhoneNumber |
 +-------------------+
-| sendNewsletter    |
+| SendNewsletter    |
 +-------------------+
 
 .. note::

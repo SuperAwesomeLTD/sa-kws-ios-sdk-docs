@@ -5,7 +5,7 @@ To obtain information on the user you're authenticated as you'll need to call:
 
 .. code-block:: objective-c
 
-  [[KWS sdk] getUser: ^(KWSUser *user) {
+  [[KWSChildren sdk] getUser: ^(KWSUser *user) {
     // handle user data
   }];
 

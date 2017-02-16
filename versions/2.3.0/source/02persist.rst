@@ -7,7 +7,7 @@ You can access the basic logged user details by calling:
 
 .. code-block:: objective-c
 
-  KWSLoggedUser *currentUser = [[KWS sdk] getLoggedUser];
+  KWSLoggedUser *currentUser = [[KWSChildren sdk] getLoggedUser];
 
 The **KWSLoggedUser** object has the following fields:
 

@@ -5,7 +5,7 @@ You can get the current application leaderboard by calling:
 
 .. code-block:: objective-c
 
-  [[KWS sdk] getLeaderboard:^(NSArray <KWSLeader*> *leaders) {
+  [[KWSChildren sdk] getLeaderboard: ^(NSArray <KWSLeader*> *leaders) {
     // handle success
   }];
 

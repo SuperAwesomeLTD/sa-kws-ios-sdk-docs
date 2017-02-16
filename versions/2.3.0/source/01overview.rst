@@ -38,14 +38,14 @@ Thus any method call will have the following pattern:
 
 .. code-block:: objective-c
 
-  [[KWS sdk] methodCall];
+  [[KWSChildren sdk] method];
 
 Since most operations performed by the SDK involve doing network requests on KWS API, most method calls won't have a return type but will instead require a callback,
 defined as an Objective-C block with a variable number of parameters.
 
 .. code-block:: objective-c
 
-  [[KWS sdk] methodCall: ^(BOOL result) {
+  [[KWSChildren sdk] method: ^(BOOL result) {
     // perform operation on result
   }];
 
@@ -56,9 +56,9 @@ Some methods also can have one or two parameters. In this case they will have th
 
 .. code-block:: objective-c
 
-  [[KWS sdk] methodCallWithParam: (NSInteger) param1
-                       withParam: (NSString*) param2
-                     andResponse: ^(BOOL result) {
+  [[KWSChildren sdk] method: (NSInteger) param1
+                  withParam: (NSString*) param2
+                andResponse: ^(BOOL result) {
     // perform operation on result
   }];
 

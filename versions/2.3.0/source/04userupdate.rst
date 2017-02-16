@@ -12,7 +12,8 @@ You can update information for the user you're authenticated as by calling:
   updatedUser.lastName = @"Name";
 
   // call the following method to update a users' details
-  [[KWS sdk] updateUser: updatedUser andResponse:^(BOOL updated) {
+  [[KWSChildren sdk] updateUser: updatedUser
+                   withResponse: ^(BOOL updated) {
     // handle update
   }];
 

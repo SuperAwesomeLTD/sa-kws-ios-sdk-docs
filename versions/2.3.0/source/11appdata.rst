@@ -7,7 +7,9 @@ You can add a pair of such data for the user you're authenticated as by calling:
 
 .. code-block:: objective-c
 
-  [[KWS sdk] setAppData:@"app-data" withValue:15 andResponse:^(BOOL success) {
+  [[KWSChildren sdk] setAppData: 15
+                        forName: @"app-data"
+                    andResponse: ^(BOOL success) {
     // handle success
   }];
 
@@ -36,7 +38,7 @@ If on the other hand you want to get the app data for the user you're authentica
 
 .. code-block:: objective-c
 
-  [[KWS sdk] getAppData: ^(NSArray <KWSAppData*> *appData) {
+  [[KWSChildren sdk] getAppData: ^(NSArray <KWSAppData*> *appData) {
 
   }];
 

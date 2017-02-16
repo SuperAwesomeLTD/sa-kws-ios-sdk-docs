@@ -11,9 +11,9 @@ You can trigger an event for the user you're authenticated as by calling:
 
 .. code-block:: objective-c
 
-  [[KWS sdk] triggerEvent:@"custom-event-30-points"
-               withPoints: 20
-              andResponse: ^(BOOL success) {
+  [[KWSChildren sdk] triggerEvent: @"custom-event-30-points"
+                       withPoints: 20
+                      andResponse: ^(BOOL success) {
     // handle success
   }];
 
