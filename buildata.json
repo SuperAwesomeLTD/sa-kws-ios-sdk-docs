@@ -6,10 +6,10 @@
 		"name": "satheme"
 	},
 	"project": {
-		"name": "iOS SDK",
+		"name": "",
 		"author": "Gabriel Coman",
 		"source": "https://github.com/SuperAwesomeLTD/sa-kws-ios-sdk-objc",
-		"domain": "Kid Safe",
+		"domain": "iOS (for Kids apps)",
 		"min": "iOS 7.0+"
 	},
 	"company": {
