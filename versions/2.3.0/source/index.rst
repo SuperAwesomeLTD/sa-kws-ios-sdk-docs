@@ -40,7 +40,7 @@ Table of Contents
 	 Add the SDK as a framework <00addframe>
    Add the SDK as a static library <00addstatic>
 	 Overview <01overview>
-	 Start a new KWS session <02session>
+	 Initialize the SDK <02session>
 	 Creating a new user <02create>
 	 Obtaining a random display name <02random>
 	 Login as user <02login>
