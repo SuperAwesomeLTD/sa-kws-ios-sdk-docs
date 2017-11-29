@@ -4,7 +4,7 @@ Initialize the SDK
 In order to be able to use the Kids Web Services SDK you'll first have to initialize it with the following values:
 
 	* a client ID
-	* a client Secret
+	* a mobile client Secret
 	* a back-end API URL to connect to
 
 To set it up you will have to call:
@@ -19,7 +19,7 @@ To set it up you will have to call:
                        andClientSecret: CLIENT_SECRET
                              andAPIUrl: API];
 
-You can obtain the Client Id, Client Secret and API host from the **Integration** section of your Kids Web Services Control Panel.
+You can obtain the Client Id, Mobile Client Secret and API host from the **Integration** section of your Kids Web Services Control Panel.
 
 They should be different for each app you have.
 
