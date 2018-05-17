@@ -37,20 +37,18 @@ Table of Contents
    :maxdepth: 2
 
 	 Add the SDK through CocoaPods <00addcocoa>
-	 Add the SDK as a framework <00addframe>
-   Add the SDK as a static library <00addstatic>
 	 Overview <01overview>
 	 Initialise the SDK <02session>
+	 Callback types <02callbacktypes>
 	 Creating and authenticating a user<02auth>
-	 Logout a user <02logout>
-   Get user details <03userdetails>
-   Update user <04userupdate>
-   Request permissions <05userpermission>
+	 Local storage of user <02localstorage>
+	 Random Display Name<02randomdisplayname>
+     Get user details <03userdetails>
+     Update user <04userupdate>
+     Request permissions <05userpermission>
 	 Associate a parent email <06parentemail>
-   Invite friends <07userinvite>
-	 Trigger event <08triggerevent>
+   	 Invite friends <07userinvite>
+	 Events <08events>
 	 Get score <09getscore>
 	 Get leaderboard <10getleaderboard>
 	 App data <11appdata>
-	 Firebase <12firebase>
-	 Notifications <13notifications>

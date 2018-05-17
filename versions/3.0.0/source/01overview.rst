@@ -34,36 +34,57 @@ Kids Web Services Parent Portal.
 While your app should rely on Kids Web Services to handle all the legal and data complexity, it should also gracefully handle cases when a user's parent has
 denied permission for certain bits of information to be stored or shared.
 
-The SDK is built around a common singleton class called **KWS**. The singleton accessor method is simply called **sdk**.
+The SDK is built around a common class called **ComplianceSDK** that will provide visibility to different functionalities, introducing a single point of connection between app and SDK.
 
-Thus any method call will have the following pattern:
+In order to gain visibility to the KWS components, it the will require:
 
-.. code-block:: objective-c
-
-  [[KWSChildren sdk] method];
-
-Since most operations performed by the SDK involve doing network requests on KWS API, most method calls won't have a return type but will instead require a callback,
-defined as an Objective-C block with a variable number of parameters.
-
-.. code-block:: objective-c
-
-  [[KWSChildren sdk] method: ^(BOOL result) {
-    // perform operation on result
-  }];
-
-Callback parameters are most of the time self explanatory. For example if the method calls wants to check if a user is registered for remote
-notifications, it'll have a boolean parameter called **success**. If it retrieves user data it will contain a reference to a user object, etc.
-
-Some methods also can have one or two parameters. In this case they will have the following signature:
-
-.. code-block:: objective-c
-
-  [[KWSChildren sdk] method: (NSInteger) param1
-                  withParam: (NSString*) param2
-                andResponse: ^(BOOL result) {
-    // perform operation on result
-  }];
+#. **environment** - using the Kids Web Services Control Panel defined configurations
+#. **service protocol** - a defined protocol with pre-set number of functionalities available
 
 .. note::
 
-  All method calls in the Kids Web Services SDK have the callback method listed as last, making them ideal for Swift and it's functional notation.
+  The **environment** and **service protocols** will be getting more focus in the upcoming pages! 
+
+Assuming an already setup environment as **myEnvironment** and an interface service as **MyServiceProtocol**, your method calls will follow this pattern:
+
+.. code-block:: swift
+
+  var myEnvironment : MyEnvironment() //your environment
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let myService = sdk.getService(withType: MyServiceProtocol.self)
+
+  myService?.methodCall()
+
+
+Since most operations performed by the SDK involve doing network requests on KWS API, most method calls won't have a return type but will instead require a callback,
+defined as a Swift completion handler with a variable number of parameters.
+
+The most frequent type of method call and callback is where a **result** or an **error** will be present.
+
+.. code-block:: swift
+
+  myService?.methodCall() { (result, error) in
+
+    if result != nil {
+      //Success! We have a result that we can use.
+    } else {
+      //Uh-oh! It seems there's an error...
+    }
+  }
+
+However, there are cases where it is only expected a success/failure type of response. 
+
+By design, the way this is done is having a **single** callback parameter, as an error type:
+
+.. code-block:: swift
+
+  myService?.methodCall() { (error) in
+
+    if error == nil {
+      //Success! All went well
+    } else {
+      //Uh-oh! It seems there's an error...
+    }
+  }
+
+Let's now have a look on how to properly initialise the SDK.
