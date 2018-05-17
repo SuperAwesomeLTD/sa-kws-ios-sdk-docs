@@ -3,14 +3,14 @@ Local storage
 
 The Kid Web Service SDK allows you to quickly and swiftly manage your session.
 
-This is done using the **ISessionService** and its methods.
+This is done using the **SessionServiceProtocol** and its methods.
 
-But before that, do you know the **ILoggedUserModel** that has been mentioned before? Well, there's an actual implementation of that **interface model** that will be very useful for the next steps.
+But before that, do you know the **LoggedUserModelProtocol** that has been mentioned before? Well, there's an actual implementation of that **model protocol** that will be very useful for the next steps.
 
 The logged model implementation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We named it **LoggedUserModel**.
+We named it **LoggedUserModel**, no surprises here.
 
 This model has the following fields:
 
@@ -43,7 +43,7 @@ Speaking of which, what about that **TokenData** model? Well, that's another int
 There's two ways of getting the data from the authentication token:
 	
 	* using the **Utils** class - see documentation page
-	* by storing the user using the **ISessionService** - will be looked into next
+	* by storing the user using the **SessionServiceProtocol** - will be looked into next
 
 .. note::
 
@@ -60,23 +60,25 @@ To store a certain user in your local storage, just call:
 
 This function will take: 
 
-============== ================== ==========
-Value           Type              	Meaning
-============== ================== ==========
-context         Context  			The current context of the application
-user            ILoggedUserModel  	A valid session model
-============== ================== ==========
+============== ======================== ==========
+Value           Type              	     Meaning
+============== ======================== ==========
+context         Context  			     The current context of the application
+user            LoggedUserModelProtocol  A valid session model
+============== ======================== ==========
 
 And should look like:
 
-.. code-block:: java
+.. code-block:: swift
 
-	//myEnvironment is considered to be a valid environment 
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let sessionService = sdk.getService(withType: SessionServiceProtocol.self)
 
-	val sdk = ComplianceSDK(myEnvironment)
-	val sessionService = sdk.getService(type = ISessionService::class.java)
+  //'user' is considered a valid model, as a LoggedUserModelProtocol implementation
 
-	val success = sessionService?.saveLoggedUser(context = this, user = user)
+  let success = sessionService?.saveLoggedUser(user: user)
+
 
 This is a **sync** operation that returns:
 
@@ -103,14 +105,13 @@ context	       Context  The current context of the application
 
 And should look like:
 
-.. code-block:: java
+.. code-block:: swift
 
-	//myEnvironment is considered to be a valid environment 
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let sessionService = sdk.getService(withType: SessionServiceProtocol.self)
 
-	val sdk = ComplianceSDK(myEnvironment)
-	val sessionService = sdk.getService(type = ISessionService::class.java)
-
-	val isUserLoggedIn = sessionService?.isUserLoggedIn(context = this)
+  let isUserLoggedIn = sessionService?.isUserLoggedIn()
 
 This is a **sync** operation that returns:
 
@@ -125,7 +126,7 @@ Get current stored user
 
 To store a certain user in your local storage, just call:
 
-	* **getCurrentUser**
+	* **getLoggedUser**
 
 This function will take:
 
@@ -137,16 +138,15 @@ context	       Context  The current context of the application
 
 And should look like:
 
-.. code-block:: java
+.. code-block:: swift
 
-	//myEnvironment is considered to be a valid environment 
+	let myEnvironment = MyEnvironment()
+	let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+    let sessionsService = sdk.getService(withType: SessionServiceProtocol.self)
+    
+    let currentLoggedUser = sessionsService?.getLoggedUser() as? LoggedUserModel
 
-	val sdk = ComplianceSDK(myEnvironment)
-	val sessionService = sdk.getService(type = ISessionService::class.java)
-
-	val currentStoredUser = sessionService?.getCurrentUser(context = this) as LoggedUserModel?
-
-	return currentStoredUser
+	return currentLoggedUser
 
 This is a **sync** operation that returns:
 

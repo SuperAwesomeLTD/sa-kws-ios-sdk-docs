@@ -49,7 +49,7 @@ Assuming an already setup environment as **myEnvironment** and an interface serv
 
 .. code-block:: swift
 
-  var myEnvironment : MyEnvironment() //your environment
+  let myEnvironment = MyEnvironment() //your environment
   let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
   let myService = sdk.getService(withType: MyServiceProtocol.self)
 

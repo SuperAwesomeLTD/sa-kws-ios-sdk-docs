@@ -69,7 +69,7 @@ Then, as seen before, the pattern to follow is:
 
 .. code-block:: swift
 
-  var myEnvironment : MyEnvironment() //your environment
+  let myEnvironment = MyEnvironment() //your environment
   let sdk = ComplianceSDK(withEnvironment: myEnvironment!) //initialize the ComplianceSDK
   let myService = sdk.getService(withType: MyServiceProtocol.self) //get the 'ServiceProtocol' with desired functionalities
 

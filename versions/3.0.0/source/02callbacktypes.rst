@@ -19,7 +19,7 @@ This will be using the **UsernameServiceProtocol**, briefly mentioned in the pre
 
 .. code-block:: swift
 
-	var myEnvironment : MyEnvironment() //your environment
+	let myEnvironment = MyEnvironment()
 	let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
 	let usernameService = sdk.getService(withType: UsernameServiceProtocol.self)
 
@@ -91,7 +91,7 @@ We will now see an example of an actual error and our suggestion on how to deal 
 
 .. code-block:: swift
 
-	var myEnvironment : MyEnvironment() //your environment
+	let myEnvironment = MyEnvironment()
 	let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
 	let myService = sdk.getService(withType: MyServiceProtocol.self)
 
@@ -102,9 +102,8 @@ We will now see an example of an actual error and our suggestion on how to deal 
         } else {
           //Uh-oh! It seems there's an error...
 
-          if let theError : ErrorWrapper = (error as! ErrorWrapper){
+          if let myError : ErrorWrapper = (error as! ErrorWrapper){
             //use the error accordingly
-          }
-
+          
         }
     }

@@ -44,18 +44,25 @@ Modify your App Delegate
 
 The fourth step is to add the following method in your AppDelegate.h file:
 
-.. code-block:: objective-c
+.. code-block:: swift
 
-    #import "KWSChildren.h"
+  //...
 
-    // ..
+  import KWSiOSSDKObjC
 
-    - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+  //...
 
-      [[KWSChildren sdk] openUrl:url withOptions:options];
-
-      return true;
-    }
+  @UIApplicationMain
+  public class AppDelegate: UIResponder, UIApplicationDelegate {
+      
+      public var window: UIWindow?
+      
+      public func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+          
+          //connect to KWS SDK from SSO - returns false if not intended for KWS
+          return SDKAppDelegate.shared.application(app, open: url, options: options)
+      }
+  }
 
 This will allow your iOS app to receive and parse the response back from the authentication process.
 
@@ -68,46 +75,51 @@ To do so we'll use the **SSO (Single Sign On) URL** obtained from the Kids Web S
 
 For our example, that should be something like **https://my.cluster.accounts.kws.superawesome.tv/**.
 
-.. code-block:: objective-c
+The **service protocol** for this is the **SingleSignOnServiceProtocol** and the functionality to use is the:
 
-    // this function takes the SSO URL as the first parameter
-    // and a View Controller instance as the second parameter
-    // as well as a callback listener as the third parameter
-    [[KWSChildren sdk] authWithSingleSignOnUrl:@"https://my.cluster.accounts.kws.superawesome.tv/"
-                                    fromParent:self
-                                   andResponse: ^(KWSChildrenLoginUserStatus status)
-    {
-      // handle the auth response status
-      switch (status) {
-        case KWSChildren_LoginUser_Success:
-          // authenticated OK
-          break;
-        case KWSChildren_LoginUser_InvalidCredentials:
-          // one of the credentials was not valid
-          break;
-        case KWSChildren_LoginUser_NetworkError:
-          // there was a network error
-          break;
-      }
-    }];
+  * **signOn**
+
+This function will take: 
+
+============== ============== ========
+Field          Type           Meaning
+============== ============== ========
+url            String         The base URL String for the SSO flow
+parent         ViewController The current View Controller instance
+============== ============== ========
+
+.. code-block:: swift
+  
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let singleSignOnService = sdk.getService(withType: SingleSignOnServiceProtocol.self)
+
+  singleSignOn?.signOn(url: "https://my.cluster.accounts.kws.superawesome.tv/", parent: self) { (result, error) in
+
+    if result != nil {
+      //Success! We have a valid user
+    } else {
+      //Uh-oh! It seems there's an error...
+    }
+  }
 
 The callback will pass the following values on completion:
 
-====== ========================== ======
-Value  Type                       Meaning
-====== ========================== ======
-status KWSChildrenLoginUserStatus End status of the operation
-====== ========================== ======
+============== ======================== =========
+Value           Type                     Meaning
+============== ======================== =========
+result          LoggedUserModelProtocol  If non-null, the SDK was able to authenticate the user
+error           Error                    If non-null, an error occurred
+============== ======================== =========
 
-The **status** parameter may have the following values:
+The **LoggedUserModelProtocol** parameter will have the following values:
 
-======================================== ======
-Value                                    Meaning
-======================================== ======
-KWSChildren_LoginUser_Success            User was authenticated successfully
-KWSChildren_LoginUser_InvalidCredentials The username or password were incorrect
-KWSChildren_LoginUser_NetworkError       Other network error
-======================================== ======
+============== ======== =========
+Field           Type    Meaning
+============== ======== =========
+token          String   The valid session token of the user
+id             Integer  The identifier of the user (when creating a user)
+============== ======== =========
 
 Native view
 ^^^^^^^^^^^
@@ -117,120 +129,117 @@ To be able to authenticate and create a user using your own native views, you ca
 Creating a user
 ---------------
 
-If there are no valid users, you can create a new one by calling:
+If there are no valid users, you can create a new one by using the **service protocol** named **AuthServiceProtocol** and the method to call is:
+  
+  * **createUser**
 
-.. code-block:: objective-c
+And it will take:
 
-  [[KWSChildren sdk] createUser: @"username"
-                   withPassword: @"password"
-                 andDateOfBirth: @"2011-03-02"
-                     andCountry: @"US"
-                 andParentEmail: @"parent@test.com"
-                    andResponse: ^(KWSChildrenCreateUserStatus status)
-  {
-    switch (status) {
-      case KWSChildren_CreateUser_Success: {
-        // create new user OK
-        break;
-      }
-      case KWSChildren_CreateUser_NetworkError: {
-        // network error while creating user
-        break;
-      }
-      case KWSChildren_CreateUser_DuplicateUsername: {
-        // duplicate username
-        break;
-      }
+============== ======== ========
+Field          Type     Meaning
+============== ======== ========
+username       String   The desired username for the new user
+password       String   The desired password for the new user
+timeZone       String   The time zone - **ALWAYS** null
+dateOfBirth    String   The date of birth for the new user
+country        String   The country code for the new user
+parentEmail    String   The parent email of the new user
+============== ======== ========
+
+As such:
+
+.. code-block:: swift
+
+  //'timeZone' is a value that the KWS API will not support at the moment, needs to be set as null
+
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let authService = sdk.getService(withType: AuthServiceProtocol.self)
+
+  authService?.createUser(username: "username", password: "password", timeZone: nil, dateOfBirth: "2012-02-02", country: "US", parentEmail: "parent@test.com") { (result, error) in
+
+    if result != nil {
+      //Success! We have a valid user
+    } else {
+      //Uh-oh! It seems there's an error...
     }
-  }];
+  }
 
 The callback will pass the following values on completion:
 
-======= =========================== ======
-Value   Type                        Meaning
-======= =========================== ======
-status  KWSChildrenCreateUserStatus End status of the operation
-======= =========================== ======
+============== ======================== ========
+Value           Type                     Meaning
+============== ======================== ========
+user            LoggedUserModelProtocol  If non-null, the SDK was able to create an authenticate the user
+error           Error                    If non-null, an error occurred
+============== ======================== ========
 
-The **status** parameter may have the following values:
+The **LoggedUserModelProtocol** parameter will have the following values:
 
-========================================= ======
-Value                                     Meaning
-========================================= ======
-KWSChildren_CreateUser_Success            User was authenticated successfully
-KWSChildren_CreateUser_InvalidUsername    Chosen username contains invalid characters
-KWSChildren_CreateUser_InvalidPassword    Password is less than 8 characters
-KWSChildren_CreateUser_InvalidDateOfBirth Date should have YYYY-MM-DD format
-KWSChildren_CreateUser_InvalidCountry     Country should have CC format
-KWSChildren_CreateUser_InvalidParentEmail Parent email is invalid
-KWSChildren_CreateUser_DuplicateUsername  The username is already in use
-KWSChildren_CreateUser_NetworkError       Other network error
-KWSChildren_CreateUser_InvalidOperation   Other invalid operation
-========================================= ======
+============== ======= =========
+Field           Type    Meaning
+============== ======= =========
+token          String   The valid session token of the user
+id             Int      The identifier of the user
+============== ======= =========
 
 From here on you'll be able to check leaderboards, assign points, enable remote notifications, set app data, etc.
-
-Obtaining a random display name
--------------------------------
-
-Sometimes it's a good idea to preemptively suggest a display name to users who want to create a new account.
-Whether you want to ensure display names are valid, safe and non-duplicate or you wish to align names with the
-in game universe you have created, KWS can help you by providing a method to generate random display names.
-
-In order for KWS to properly generate then you'll first have to add possible values in your KWS dashboard:
-
-.. image:: img/randomnames.png
-
-Once that's done, it's a simple as calling:
-
-.. code-block:: objective-c
-
-  [[KWSChildren sdk] getRandomUsername: ^(NSString *name) {
-      // if the name parameter is null, no name could be generated or
-      // KWS is down;
-      // Otherwise it will return a valid, unique name based on the values
-      // you entered in the dashboard
-  }];
 
 Login user
 ----------
 
-To login as a user you'll have to call:
+To login as a user programmatically, you need to use the **service protocol** named **AuthServiceProtocol** and the method to call is:
 
-.. code-block:: objective-c
+  * **loginUser**
 
-  [[KWSChildren sdk] loginUser: @"username"
-                  withPassword: @"password"
-                   andResponse: ^(KWSChildrenLoginUserStatus status)
-  {
-    // handle the auth response status
-    switch (status) {
-      case KWSChildren_LoginUser_Success:
-        // authenticated OK
-        break;
-      case KWSChildren_LoginUser_InvalidCredentials:
-        // one of the credentials was not valid
-        break;
-      case KWSChildren_LoginUser_NetworkError:
-        // there was a network error
-        break;
+And it will take:
+
+============== ======== ========
+Field          Type     Meaning
+============== ======== ========
+username       String   The user's username
+password       String   The user's password 
+============== ======== ========
+
+As such:
+
+.. code-block :: swift
+
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let authService = sdk.getService(withType: AuthServiceProtocol.self)
+
+  authService?.loginUser(userName: "username", password: "password") { (result, error) in
+
+    if result != nil {
+      //Success! We have a valid user
+    } else {
+      //Uh-oh! It seems there's an error...
     }
-  }];
+  }
 
 The callback will pass the following values on completion:
 
-====== ========================== ======
-Value  Type                       Meaning
-====== ========================== ======
-status KWSChildrenLoginUserStatus End status of the operation
-====== ========================== ======
+============== ======================== ========
+Value           Type                    Meaning
+============== ======================== ========
+user            LoggedUserModelProtocol If non-null, the SDK was able to authenticate the user
+error           Error                   If non-null, an error occurred
+============== ======================== ========
 
-The **status** parameter may have the following values:
+The **LoggedUserModelProtocol** parameter will have the following values:
 
-======================================== ======
-Value                                    Meaning
-======================================== ======
-KWSChildren_LoginUser_Success            User was authenticated successfully
-KWSChildren_LoginUser_InvalidCredentials The username or password were incorrect
-KWSChildren_LoginUser_NetworkError       Other network error
-======================================== ======
+============== ======== ========
+Field           Type    Meaning
+============== ======== ========
+token          String   The valid session token of the user
+============== ======== ========
+
+From here on you'll be able to check leaderboards, assign points, enable remote notifications, set app data, etc.
+
+The authentication token
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The type of tokens used in the Kids Web Service are `JWT Tokens <https://jwt.io/introduction/>`_.
+
+Next, we'll be describing how to read data from the retrieved token and how to handle a session with the Kids Web Service SDK.
