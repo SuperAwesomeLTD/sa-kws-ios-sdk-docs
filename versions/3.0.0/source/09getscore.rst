@@ -1,7 +1,7 @@
 Get score
 =========
 
-You can get the current score of the user you're authenticated as by by using **IScoringService** and calling:
+You can get the current score of the user you're authenticated as by by using **ScoreServiceProtocol** and calling:
 
 * **getScore**
 
@@ -19,32 +19,31 @@ token       String  The authenticated user token
 
  As an example, we'll be using **2**.
 
-.. code-block:: java
+.. code-block:: swift
 
-   //myEnvironment is considered to be a valid environment 
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let scoreService = sdk.getService(withType: ScoreServiceProtocol.self)
 
-   val sdk = ComplianceSDK(myEnvironment)
-   val scoringService = sdk.getService(IScoringService::class.java)
+  scoreService?.getScore(appId: 2, token: "AAA.BBB.CCC"){ (result, error) in
 
-   scoringService?.getScore(appId = 2, token = "AAA.BBB.CCC") { scoreModel, error ->
-
-      if(scoreModel != null){
-        //Success!!! All went well.
-      } else {
-        //Uh-oh! It seems there's an error...
-      }
-   }
+    if result != nil {
+      //Success!!! All went well.
+    } else {
+      //Uh-oh! It seems there's an error...
+    }
+  }
 
 The callback will pass the following value on completion:
 
-=========== ===================== ======
-Value   		Type    		  Meaning
-=========== ===================== ======
-userDetails 	IScoreModel       If non-null, the SDK was able to a score for the user
-error           Throwable         If non-null, an error occurred
-=========== ===================== ======
+=========== ================== ======
+Value       Type               Meaning
+=========== ================== ======
+result      ScoreModelProtocol If non-null, the SDK was able to a score for the user
+error       Error              If non-null, an error occurred
+=========== ================== ======
 
-The **IScoreModel** object contains the following fields:
+The **ScoreModelProtocol** contains the following fields:
 
 ===== ======= =======
 Field Type    Meaning

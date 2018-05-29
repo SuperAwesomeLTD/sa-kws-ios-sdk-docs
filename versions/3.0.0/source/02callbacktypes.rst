@@ -19,19 +19,19 @@ This will be using the **UsernameServiceProtocol**, briefly mentioned in the pre
 
 .. code-block:: swift
 
-	let myEnvironment = MyEnvironment()
-	let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
-	let usernameService = sdk.getService(withType: UsernameServiceProtocol.self)
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let usernameService = sdk.getService(withType: UsernameServiceProtocol.self)
 
-	usernameService?.getRandomUsername() { (result, error) in
+  usernameService?.getRandomUsername() { (result, error) in
 		
-        if result != nil {
-          //Success! We have a 'result' we can use. Let's get the username
-          var myGeneratedRandomUsername = result?.randomUsername 
-        } else {
-          //Uh-oh! It seems there's an error...
-        }
-    }
+      if result != nil {
+        //Success! We have a 'result' we can use. Let's get the username
+        var myGeneratedRandomUsername = result?.randomUsername 
+      } else {
+        //Uh-oh! It seems there's an error...
+      }
+  }
 
 The **RandomUsernameModelProtocol** will be explained better and with more detail in it's appropriate page, but in this snippet we can see that when the **result** is not null, we can access the property **randomUsername** that will be your random generated username for that method call.
 
@@ -44,23 +44,23 @@ When something goes wrong while using the Kids Web Services functionalities, an 
 
 This error response is in a form of a KWS **ErrorWrapperModelProtocol** - as the name suggests, this will be a wrapper around the errors that can occur.
 
-The **ErrorWrapperModelProtocol** object has the following fields:
+The **ErrorWrapperModelProtocol** has the following fields:
 
 =========== ==================================== ==========
-Field 		Type 					             Meaning
+Field       Type                                   Meaning
 =========== ==================================== ==========
-code 		Integer  				  			 The error code, optional value
-codeMeaning String 				   	  			 The code meaning, optional value
+code        Integer                              The error code, optional value
+codeMeaning String                               The code meaning, optional value
 invalid     InvalidTypeErrorWrapperModelProtocol The invalid wrapper object, optional value
-message 	String 				   	             The error message, optional value
-error 		String 				   	             A different type of error, optional value
-errorCode 	String 				   	             A different type of error code, optional value
+message     String                               The error message, optional value
+error       String                               A different type of error, optional value
+errorCode   String                               A different type of error code, optional value
 =========== ==================================== ==========
 
-The **IInvalidTypeErrorWrapperModel** object has the following fields:
+The **IInvalidTypeErrorWrapperModel** has the following fields:
 
 =============== ================== ========
-Field  			Type     	       Meaning
+Field           Type               Meaning
 =============== ================== ========
 password        ErrorModelProtocol The invalid type of 'password', optional value
 username        ErrorModelProtocol The invalid type of 'username', optional value
@@ -68,14 +68,14 @@ addressCountry 	ErrorModelProtocol The invalid type of 'addressCountry', optiona
 addressPostCode ErrorModelProtocol The invalid type of 'addressPostCode', optional value
 addressStreet 	ErrorModelProtocol The invalid type of 'addressStreet', optional value
 country         ErrorModelProtocol The invalid type of 'country', optional value
-dateOfBirth 	ErrorModelProtocol The invalid type of 'dateOfBirth', optional value
+dateOfBirth     ErrorModelProtocol The invalid type of 'dateOfBirth', optional value
 oauthClientId 	ErrorModelProtocol The invalid type of 'oauthClientId', optional value
-parentEmail 	ErrorModelProtocol The invalid type of 'parentEmail', optional value
-permissions 	ErrorModelProtocol The invalid type of 'permissions', optional value
+parentEmail     ErrorModelProtocol The invalid type of 'parentEmail', optional value
+permissions     ErrorModelProtocol The invalid type of 'permissions', optional value
 token           ErrorModelProtocol The invalid type of 'token', optional value
 =============== ================== ========
 
-The **ErrorModelProtocol** object has the following fields:
+The **ErrorModelProtocol** has the following fields:
 
 =========== ======== ========
 Field 		Type     Meaning
@@ -91,19 +91,22 @@ We will now see an example of an actual error and our suggestion on how to deal 
 
 .. code-block:: swift
 
-	let myEnvironment = MyEnvironment()
-	let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
-	let myService = sdk.getService(withType: MyServiceProtocol.self)
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let myService = sdk.getService(withType: MyServiceProtocol.self)
 
-	myService?.methodCall() { (result, error) in
+  myService?.methodCall() { (result, error) in
 		
-        if result != nil {
-          //Success! All went well
-        } else {
-          //Uh-oh! It seems there's an error...
+    if result != nil {
+      //Success! All went well
+    } else {
+      //Uh-oh! It seems there's an error...
 
-          if let myError : ErrorWrapper = (error as! ErrorWrapper){
-            //use the error accordingly
-          
-        }
+      if let myError : ErrorWrapper = (error as! ErrorWrapper){
+        //use the error accordingly
     }
+  }
+
+.. note::
+  
+  Please note that the type of error on a calback is, at it's core, the `Swift Error <https://developer.apple.com/documentation/swift/error>`_ 

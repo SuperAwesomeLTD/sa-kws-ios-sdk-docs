@@ -14,7 +14,7 @@ After creating an event, it should look like this:
 Trigger event
 -------------
 
-You can trigger an event for the user you're authenticated as by using **IUserActionsService** and calling:
+You can trigger an event for the user you're authenticated as by using **UserActionsServiceProtocol** and calling:
 
 * **triggerEvent**
 
@@ -39,32 +39,31 @@ And look like this:
 
 .. code-block:: java
 
-   //myEnvironment is considered to be a valid environment 
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let userActionsService = sdk.getService(withType: UserActionsServiceProtocol.self)
 
-   val sdk = ComplianceSDK(myEnvironment)
-   val userActionsService = sdk.getService(IUserActionsService::class.java)
-
-   //your event code as per the Control Panel
-   val eventId = "custom-event-30-points"
+  //your event code as per the Control Panel
+  let eventId = "custom-event-30-points"
    
-   //the number of points to award
-   val points = 30
+  //the number of points to award
+  let points = 30
 
-   userActionsService?.triggerEvent(eventId = eventId, points = points, userId = 123, token = "AAA.BBB.CCC") { error ->
+  userActionsService?.triggerEvent(eventId: eventId, points: points, userId: 123, token: "AAA.BBB.CCC" ){ (error) in
 
-      if(error == null){
-        //Success!!! All went well.
-      } else {
-        //Uh-oh! It seems there's an error...
-      }
-   }
+    if error == nil {
+      //Success!!! All went well.
+    } else {
+      //Uh-oh! It seems there's an error...
+    }
+  }
 
 The callback will pass the following values on completion:
 
 ======= ========= ======
 Value   Type      Meaning
 ======= ========= ======
-error   Throwable If non-null, an error occurred
+error   Error     If non-null, an error occurred
 ======= ========= ======
 
 
@@ -80,7 +79,7 @@ It will take:
 =========== ======= =======
 Field       Type    Meaning
 =========== ======= =======
-eventId     Integer  The event id, as defined in the Control Panel
+eventId     Integer The event id, as defined in the Control Panel
 points      Integer The number of points to be awarded
 userdId     Integer The authenticated user id
 token       String  The authenticated user token
@@ -94,29 +93,38 @@ token       String  The authenticated user token
 
 And look like this:
 
-.. code-block:: java
+.. code-block:: swift
 
-   //myEnvironment is considered to be a valid environment 
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let userActionsService = sdk.getService(withType: UserActionsServiceProtocol.self)
 
-   val sdk = ComplianceSDK(myEnvironment)
-   val userActionsService = sdk.getService(IUserActionsService::class.java)
+  //your event id as per the Control Panel
+  let eventId = 808
 
-   //your event id as per the Control Panel
-   val eventId = 808
+  userActionsService?.hasTriggeredEvent(eventId: eventId, userId: userId, token: token){ (result, error) in
 
-   userActionsService?.hasTriggeredEvent(eventId = eventId, userId = 123, token = "AAA.BBB.CCC") { responseModel, error ->
-
-      if(error == null){
-        //Success!!! All went well.
-      } else {
-        //Uh-oh! It seems there's an error...
-      }
-   }
+    if result != nil {
+      //Success!!! All went well.
+    } else {
+      //Uh-oh! It seems there's an error...
+    }
+  }
 
 The callback will pass the following values on completion:
 
-======= ========= ======
-Value   Type      Meaning
-======= ========= ======
-error   Throwable If non-null, an error occurred
-======= ========= ======
+======= =============================== ======
+Value   Type                            Meaning
+======= =============================== ======
+result  HasTriggeredEventModelProtocol  If non-null, the SDK was able to validate if an event has been triggered
+error   Error                           If non-null, an error occurred
+======= =============================== ======
+
+The **HasTriggeredEventModelProtocol** object has the following fields:
+
+================= ======== =======
+Field             Type     Meaning
+================= ======== =======
+hasTriggeredEvent Boolean  Unique Id of the user
+name              String   Username for this app only
+================= ======== =======

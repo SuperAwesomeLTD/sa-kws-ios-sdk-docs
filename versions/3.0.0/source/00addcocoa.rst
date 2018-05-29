@@ -46,8 +46,11 @@ After the pod source has been added, update your project's dependencies by runni
 
 Don't forget to use the **.xcworkspace** file to open your project in Xcode, instead of the **.xcproj** file, from here on out.
 
-You can import the main SDK header file like so:
+You can import the SDK like so:
 
-.. code-block:: c++
+.. code-block:: swift
 
-    #import "KWS.h"
+    import KWSiOSSDKObjC
+    import SAProtobufs
+
+The **SAProtobufs** import is for the access to the **protocols** the SDK needs to know about. These will be highlighted in the upcoming pages of this documentation.

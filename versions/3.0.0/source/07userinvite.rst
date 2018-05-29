@@ -1,19 +1,29 @@
 Invite friends
 ==============
 
-You can invite other users on behalf of the user you're authenticated as by calling:
+You can invite other users on behalf of the user you're authenticated as by using **UserActionsServiceProtocol** and calling:
 
-.. code-block:: objective-c
+* **inviteUser**
 
-  [[KWSChildren sdk] inviteUser: @"friend@test.com"
-                   withResponse: ^(BOOL invited) {
-    // handle invite
-  }];
+.. code-block:: swift
 
-The callback will pass the following value on completion:
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let userActionsService = sdk.getService(withType: UserActionsServiceProtocol.self)
 
-======= ==== ======
-Value   Type Meaning
-======= ==== ======
-invited Bool If true, user will receive an email inviting him to your app on behalf of KWS.
-======= ==== ======
+   userActionsService?.inviteUser(email: "friend@test.com", userId: 123, token: "AAA.BBB.CCC") { (error) in
+
+      if error == nil {
+        //Success!!! All went well.
+      } else {
+        //Uh-oh! It seems there's an error...
+      }
+   }
+
+The callback will pass the following values on completion:
+
+======= ========= ======
+Value   Type      Meaning
+======= ========= ======
+error   Error     If non-null, an error occurred
+======= ========= ======

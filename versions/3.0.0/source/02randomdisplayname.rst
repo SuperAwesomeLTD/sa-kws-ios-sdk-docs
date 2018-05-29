@@ -12,22 +12,21 @@ In order for KWS to properly generate then you'll first have to add possible val
 
 .. image:: img/randomnames.png
 
-Once that's done, it's a simple as using the **interface service** named **IUsernameService** and the method to call is:
+Once that's done, it's a simple as using the **service protocol** named **UsernameServiceProtocol** and the method to call is:
   
   * **getRandomUsername**
 
 As such:
 
-.. code-block:: java
+.. code-block:: swift
 
-  //myEnvironment is considered to be a valid environment 
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let usernameService = sdk.getService(withType: UsernameServiceProtocol.self)
 
-  val sdk = ComplianceSDK(myEnvironment)
-  val usernameService = sdk.getService(IUsernameService::class.java)
+  usernameService?.getRandomUsername() { (result, error) in
 
-  usernameService?.getRandomUsername { username, error ->
-
-    if (username != null) {
+    if result != nil {
       //Success! We have a valid username
     } else {
       //Uh-oh! It seems there's an error...
@@ -36,14 +35,14 @@ As such:
 
 The callback will pass the following values on completion:
 
-============== ====================== ========
-Value           Type                  Meaning
-============== ====================== ========
-username        IRandomUsernameModel  If non-null, SDK was able to get a random username as per rules defined in KWS dashboard
-error           Throwable             If non-null, an error occurred
-============== ====================== ========
+============== ============================ ========
+Value           Type                         Meaning
+============== ============================ ========
+result          RandomUsernameModelProtocol  If non-null, SDK was able to get a random username as per rules defined in KWS dashboard
+error           Error                        If non-null, an error occurred
+============== ============================ ========
 
-The **IRandomUsernameModel** parameter will have the following values:
+The **RandomUsernameModelProtocol** parameter will have the following values:
 
 ============== ======== ========
 Field           Type    Meaning

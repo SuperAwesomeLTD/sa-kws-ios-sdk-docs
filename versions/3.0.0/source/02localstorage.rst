@@ -63,7 +63,6 @@ This function will take:
 ============== ======================== ==========
 Value           Type              	     Meaning
 ============== ======================== ==========
-context         Context  			     The current context of the application
 user            LoggedUserModelProtocol  A valid session model
 ============== ======================== ==========
 
@@ -95,15 +94,9 @@ To check if there's a valid cached user, just call:
 
 	* **isUserLoggedIn**
 
-This function will take:
+This function will **not** take any parameters.
 
-============== ======== ========
-Field          Type     Meaning
-============== ======== ========
-context	       Context  The current context of the application
-============== ======== ========
-
-And should look like:
+It should look like:
 
 .. code-block:: swift
 
@@ -128,25 +121,20 @@ To store a certain user in your local storage, just call:
 
 	* **getLoggedUser**
 
-This function will take:
+This function will **not** take any parameters.
 
-============== ======== ========
-Field          Type     Meaning
-============== ======== ========
-context	       Context  The current context of the application
-============== ======== ========
-
-And should look like:
+It should look like:
 
 .. code-block:: swift
 
-	let myEnvironment = MyEnvironment()
-	let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
-    let sessionsService = sdk.getService(withType: SessionServiceProtocol.self)
-    
-    let currentLoggedUser = sessionsService?.getLoggedUser() as? LoggedUserModel
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let sessionsService = sdk.getService(withType: SessionServiceProtocol.self)
+  
+  //we get a 'currentLoggedUser' by casting it to a 'LoggedUserModelProtocol' implementation, the 'LoggedUserModel'
+  let currentLoggedUser = sessionsService?.getLoggedUser() as? LoggedUserModel
 
-	return currentLoggedUser
+  return currentLoggedUser
 
 This is a **sync** operation that returns:
 
@@ -167,24 +155,17 @@ To logout a certain user from your local storage, just call:
   
   * **clearLoggedUser**
 
-This function will take:
+This function will **not** take any parameters.
 
-============== ======== ========
-Field          Type     Meaning
-============== ======== ========
-context	       Context  The current context of the application
-============== ======== ========
+It should look like:
 
-And should look like:
+.. code-block:: swift
 
-.. code-block:: java
+  let myEnvironment = MyEnvironment()
+  let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
+  let sessionsService = sdk.getService(withType: SessionServiceProtocol.self)
 
-	//myEnvironment is considered to be a valid environment 
-
-	val sdk = ComplianceSDK(myEnvironment)
-	val sessionService = sdk.getService(type = ISessionService::class.java)
-
-	val success = sessionService?.clearLoggedUser(context = this)
+  let success = sessionService?.clearLoggedUser()
 
 This is a **sync** operation that returns:
 

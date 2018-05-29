@@ -42,7 +42,7 @@ desired URL scheme.
 Modify your App Delegate
 ------------------------
 
-The fourth step is to add the following method in your AppDelegate.h file:
+The fourth step is to add the following method in your **AppDelegate** file:
 
 .. code-block:: swift
 
@@ -92,9 +92,11 @@ parent         ViewController The current View Controller instance
   
   let myEnvironment = MyEnvironment()
   let sdk = ComplianceSDK(withEnvironment: myEnvironment!)
-  let singleSignOnService = sdk.getService(withType: SingleSignOnServiceProtocol.self)
+  
+  //this is declared previously
+  singleSignOnService = sdk.getService(withType: SingleSignOnServiceProtocol.self)
 
-  singleSignOn?.signOn(url: "https://my.cluster.accounts.kws.superawesome.tv/", parent: self) { (result, error) in
+  singleSignOnService?.signOn(url: "https://my.cluster.accounts.kws.superawesome.tv/", parent: self) { (result, error) in
 
     if result != nil {
       //Success! We have a valid user
@@ -102,6 +104,15 @@ parent         ViewController The current View Controller instance
       //Uh-oh! It seems there's an error...
     }
   }
+
+.. note::
+  
+  Please note that in order to not lose reference to the protocol during the SSO flow, you'll need to declare it with a **strong reference**, as follows:
+
+.. code-block:: swift
+
+    //strong reference to our protocol
+    private var singleSignOn: SingleSignOnServiceProtocol?
 
 The callback will pass the following values on completion:
 
@@ -120,6 +131,7 @@ Field           Type    Meaning
 token          String   The valid session token of the user
 id             Integer  The identifier of the user (when creating a user)
 ============== ======== =========
+
 
 Native view
 ^^^^^^^^^^^
@@ -170,7 +182,7 @@ The callback will pass the following values on completion:
 ============== ======================== ========
 Value           Type                     Meaning
 ============== ======================== ========
-user            LoggedUserModelProtocol  If non-null, the SDK was able to create an authenticate the user
+result          LoggedUserModelProtocol  If non-null, the SDK was able to create an authenticate the user
 error           Error                    If non-null, an error occurred
 ============== ======================== ========
 
@@ -223,7 +235,7 @@ The callback will pass the following values on completion:
 ============== ======================== ========
 Value           Type                    Meaning
 ============== ======================== ========
-user            LoggedUserModelProtocol If non-null, the SDK was able to authenticate the user
+result          LoggedUserModelProtocol If non-null, the SDK was able to authenticate the user
 error           Error                   If non-null, an error occurred
 ============== ======================== ========
 
